@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { Router } from 'react-router-dom';
 
-function App() {
+import api from './services/api';
+import history from './services/history';
+
+import Routes from './routes';
+
+import './App.scss';
+import 'antd/dist/antd.css';
+
+export default function App() {
+  useEffect(() => {
+    async function getAuth() {
+      const { data } = await api.post('auth/session-request', {
+        system_api_key: '505763d6-4202-4b05-9efc-93b366939bcf',
+      });
+
+      localStorage.setItem('auth', data.data.access_key);
+    }
+
+    getAuth();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router history={history}>
+      <Routes />
+    </Router>
   );
 }
-
-export default App;
