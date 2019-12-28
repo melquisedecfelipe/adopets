@@ -2,13 +2,14 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const auth = localStorage.getItem('auth');
+  const sessionRegister = localStorage.getItem('session-register');
+  const sessionRequest = localStorage.getItem('session-request');
 
   return (
     <Route
       {...rest}
       render={props =>
-        auth ? (
+        sessionRegister && sessionRequest ? (
           <>
             <Component {...props} />
           </>

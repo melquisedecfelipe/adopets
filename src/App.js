@@ -16,7 +16,7 @@ export default function App() {
         system_api_key: '505763d6-4202-4b05-9efc-93b366939bcf',
       });
 
-      localStorage.setItem('auth', data.data.access_key);
+      localStorage.setItem('session-request', data.data.access_key);
     }
 
     getAuth();
