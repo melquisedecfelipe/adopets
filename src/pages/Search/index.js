@@ -24,7 +24,7 @@ export default function Search() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [order, setOrder] = useState('');
-  const [petPerPage, setPetPerPage] = useState(9);
+  const [petPerPage, setPetPerPage] = useState(12);
   const [pets, setPets] = useState(undefined);
   const [totalPages, setTotalPages] = useState(undefined);
 
