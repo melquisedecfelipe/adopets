@@ -5,8 +5,8 @@ import './styles.scss';
 import cao from '../../image/dog.jpg';
 
 export default function Pets({ pets }) {
+  const { count } = pets;
   const { result } = pets;
-  console.log();
 
   return (
     <div className="pets-container">
@@ -15,7 +15,7 @@ export default function Pets({ pets }) {
           <p>
             Pets{' '}
             <span>
-              - <strong>{result.length}</strong> pets encontrados
+              - <strong>{count}</strong> pets encontrados
             </span>
           </p>
           <div className="pets-content">
