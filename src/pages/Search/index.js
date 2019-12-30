@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './styles.scss';
 
 import Button from '../../components/Button';
+import Paginate from '../../components/Paginate';
 import Pets from '../../components/Pets';
 import Select from '../../components/Select';
 
@@ -10,76 +11,35 @@ import api from '../../services/api';
 
 import logo from '../../image/logo.svg';
 
+import ageKeys from './ageKeys';
+import optionsSelect from './optionsSelect';
+import sexKeys from './sexKeys';
+import sizeKeys from './sizeKeys';
+
 export default function Search() {
   const organizationUser = JSON.parse(localStorage.getItem('organization-user'));
   const sessionRegister = localStorage.getItem('session-register');
-  const [dataPets, setDataPets] = useState(undefined);
-  const { first_name, last_name } = organizationUser;
+  const firstName = organizationUser.first_name;
+  const lastName = organizationUser.last_name;
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [petPerPage, setPetPerPage] = useState(9);
+  const [pets, setPets] = useState(undefined);
+  const [totalPages, setTotalPages] = useState(undefined);
+
+  const [ageKey, setAgeKey] = useState('');
   const [sexKey, setSexKey] = useState('');
   const [sizeKey, setSizeKey] = useState('');
-  const [ageKey, setAgeKey] = useState('');
+
   let search = {};
-  const sexKeys = [
-    {
-      value: '',
-      description: 'Select',
-    },
-    {
-      value: 'MALE',
-      description: 'Male',
-    },
-    {
-      value: 'FEMALE',
-      description: 'Female',
-    },
-  ];
-  const sizekeys = [
-    {
-      value: '',
-      description: 'Select',
-    },
-    {
-      value: 'S',
-      description: 'S',
-    },
-    {
-      value: 'M',
-      description: 'M',
-    },
-    {
-      value: 'L',
-      description: 'L',
-    },
-    {
-      value: 'XL',
-      description: 'XL',
-    },
-  ];
-  const agekeys = [
-    {
-      value: '',
-      description: 'Select',
-    },
-    {
-      value: 'BABY',
-      description: 'Baby',
-    },
-    {
-      value: 'YOUNG',
-      description: 'Young',
-    },
-    {
-      value: 'ADULT',
-      description: 'Adult',
-    },
-    {
-      value: 'SENIOR',
-      description: 'Senior',
-    },
-  ];
+  let options = {};
+
+  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   async function handleSearch(e) {
-    e.preventDefault();
+    if (e !== undefined) {
+      e.preventDefault();
+    }
     if (sexKey !== '') {
       search = { ...search, sex_key: sexKey };
     }
@@ -89,22 +49,29 @@ export default function Search() {
     if (ageKey !== '') {
       search = { ...search, age_key: ageKey };
     }
+    options = { ...options, page: currentPage, limit: petPerPage };
+
     try {
       const { data } = await api.post(
         'pet/search',
         {
           search,
+          options,
         },
         {
           headers: { Authorization: sessionRegister },
         },
       );
-
-      setDataPets(data.data);
+      setPets(data.data);
+      setTotalPages(data.data.pages);
     } catch (error) {
       console.error(error);
     }
   }
+
+  useEffect(() => {
+    handleSearch();
+  }, [handleSearch, currentPage, petPerPage]);
 
   function handleSex(e) {
     setSexKey(e);
@@ -118,19 +85,21 @@ export default function Search() {
     setAgeKey(e);
   }
 
+  function handlePetPerPage(e) {
+    setPetPerPage(e);
+  }
+
   return (
     <>
       <div
         className={
-          dataPets !== undefined && dataPets.length !== 0
-            ? 'search-container -pets'
-            : 'search-container'
+          pets !== undefined && pets.length !== 0 ? 'search-container -pets' : 'search-container'
         }
       >
         <header>
           <img src={logo} alt="Adopets" />
           <p>
-            {first_name} <strong>{last_name}</strong>
+            {firstName} <strong>{lastName}</strong>
           </p>
         </header>
         <form>
@@ -143,13 +112,35 @@ export default function Search() {
           </div>
           <div className="search">
             <Select value={sexKey} onChange={handleSex} option={sexKeys} />
-            <Select value={sizeKey} onChange={handleSize} option={sizekeys} />
-            <Select value={ageKey} onChange={handleAge} option={agekeys} />
+            <Select value={sizeKey} onChange={handleSize} option={sizeKeys} />
+            <Select value={ageKey} onChange={handleAge} option={ageKeys} />
             <Button classe="-white" label="Buscar" onClick={handleSearch} />
           </div>
         </form>
       </div>
-      {dataPets !== undefined && dataPets.result !== 0 && <Pets pets={dataPets} />}
+      {pets !== undefined && pets.result !== 0 && <Pets pets={pets} />}
+      {pets !== undefined && pets.length !== 0 && (
+        <div className="footer">
+          <div className="register">
+            <div className="select">
+              <p>Mostrando</p>
+              <Select value={petPerPage} onChange={handlePetPerPage} option={optionsSelect} />
+              <p>
+                de <strong>{pets.length}</strong>
+                registros encontrados.{' '}
+              </p>
+            </div>
+            <div className="paginate">
+              <Paginate
+                currentPage={currentPage}
+                petPerPage={petPerPage}
+                totalPages={totalPages}
+                paginate={paginate}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
