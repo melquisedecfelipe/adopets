@@ -6,21 +6,30 @@
   > .found {
     padding: 100px 100px 50px 100px;
 
-    > p {
-      font-size: 24px;
-      line-height: 32px;
-      font-weight: bold;
-      color: #ce3f71;
+    > .header {
+      display: flex;
+      justify-content: space-between;
 
-      > span {
-        font-size: 18px;
-        line-height: 23px;
-        font-weight: normal;
-        color: #4b4b4b;
+      > p {
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: bold;
+        color: #ce3f71;
 
-        > strong {
-          font-weight: bold;
+        > span {
+          font-size: 18px;
+          line-height: 23px;
+          font-weight: normal;
+          color: #4b4b4b;
+
+          > strong {
+            font-weight: bold;
+          }
         }
+      }
+
+      > div {
+        width: 150px !important;
       }
     }
 
@@ -180,6 +189,11 @@
   .pets-container {
     > .found {
       padding: 30px 30px 15px 30px;
+
+      > .header {
+        display: flex;
+        flex-direction: column;
+      }
 
       > .pets-content {
         grid-template-columns: 1fr;

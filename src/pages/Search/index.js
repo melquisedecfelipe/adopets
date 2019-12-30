@@ -23,6 +23,7 @@ export default function Search() {
   const lastName = organizationUser.last_name;
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [order, setOrder] = useState('');
   const [petPerPage, setPetPerPage] = useState(9);
   const [pets, setPets] = useState(undefined);
   const [totalPages, setTotalPages] = useState(undefined);
@@ -49,6 +50,9 @@ export default function Search() {
     if (ageKey !== '') {
       search = { ...search, age_key: ageKey };
     }
+    if (order !== '') {
+      options = { ...options, sort: [order] };
+    }
     options = { ...options, page: currentPage, limit: petPerPage };
 
     try {
@@ -71,7 +75,7 @@ export default function Search() {
 
   useEffect(() => {
     handleSearch();
-  }, [handleSearch, currentPage, petPerPage]);
+  }, [order, currentPage, petPerPage]);
 
   function handleSex(e) {
     setSexKey(e);
@@ -87,6 +91,11 @@ export default function Search() {
 
   function handlePetPerPage(e) {
     setPetPerPage(e);
+  }
+
+  function handleOrder(e) {
+    setOrder(e);
+    options = { ...options, sort: [e] };
   }
 
   return (
@@ -118,7 +127,7 @@ export default function Search() {
           </div>
         </form>
       </div>
-      {pets !== undefined && pets.result !== 0 && <Pets pets={pets} />}
+      {pets !== undefined && pets.result !== 0 && <Pets pets={pets} onChange={handleOrder} />}
       {pets !== undefined && pets.length !== 0 && (
         <div className="footer">
           <div className="register">

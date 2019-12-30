@@ -1,23 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './styles.scss';
 
 import cao from '../../image/dog.jpg';
 
-export default function Pets({ pets }) {
+import Select from '../Select';
+import orders from './orders';
+
+export default function Pets({ pets, onChange }) {
+  const [order, setOrder] = useState('');
   const { count } = pets;
   const { result } = pets;
+
+  function handleOrder(e) {
+    setOrder(e);
+    onChange(e);
+  }
 
   return (
     <div className="pets-container">
       {result.length !== 0 ? (
         <div className="found">
-          <p>
-            Pets{' '}
-            <span>
-              - <strong>{count}</strong> pets encontrados
-            </span>
-          </p>
+          <div className="header">
+            <p>
+              Pets{' '}
+              <span>
+                - <strong>{count}</strong> pets encontrados
+              </span>
+            </p>
+            <Select value={order} onChange={handleOrder} option={orders} />
+          </div>
           <div className="pets-content">
             {result.map(elem => (
               <div className="pets-card" key={elem.id}>
