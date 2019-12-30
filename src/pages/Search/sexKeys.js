@@ -1,15 +1,15 @@
 const sexKeys = [
   {
     value: '',
-    description: 'Selecione',
+    description: 'Sexo',
   },
   {
     value: 'MALE',
-    description: 'Male',
+    description: 'Macho',
   },
   {
     value: 'FEMALE',
-    description: 'Female',
+    description: 'Fêmea',
   },
 ];
 

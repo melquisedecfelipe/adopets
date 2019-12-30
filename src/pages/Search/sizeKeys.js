@@ -1,23 +1,23 @@
 const sizeKeys = [
   {
     value: '',
-    description: 'Selecione',
+    description: 'Tamanho',
   },
   {
     value: 'S',
-    description: 'S',
+    description: 'Pequeno',
   },
   {
     value: 'M',
-    description: 'M',
+    description: 'Médio',
   },
   {
     value: 'L',
-    description: 'L',
+    description: 'Grande',
   },
   {
     value: 'XL',
-    description: 'XL',
+    description: 'Muito grande',
   },
 ];
 

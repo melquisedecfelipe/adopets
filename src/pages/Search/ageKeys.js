@@ -1,19 +1,19 @@
 const ageKeys = [
   {
     value: '',
-    description: 'Selecione',
+    description: 'Idade',
   },
   {
     value: 'BABY',
-    description: 'Baby',
+    description: 'Bebê',
   },
   {
     value: 'YOUNG',
-    description: 'Young',
+    description: 'Jovem',
   },
   {
     value: 'ADULT',
-    description: 'Adult',
+    description: 'Adulto',
   },
   {
     value: 'SENIOR',
