@@ -37,6 +37,7 @@ This project was developed with the following technologies:
 - [Husky](https://github.com/typicode/husky)
 - [Prettier](https://prettier.io/)
 - [React](https://reactjs.org/)
+- [React icons](https://react-icons.netlify.com/)
 - [React router](https://reacttraining.com/react-router/)
 
 ## :information_source: How To Use
