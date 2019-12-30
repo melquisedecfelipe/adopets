@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './styles.scss';
 
 import Button from '../../components/Button';
+import Pets from '../../components/Pets';
 import Select from '../../components/Select';
 
 import api from '../../services/api';
@@ -12,11 +13,12 @@ import logo from '../../image/logo.svg';
 export default function Search() {
   const organizationUser = JSON.parse(localStorage.getItem('organization-user'));
   const sessionRegister = localStorage.getItem('session-register');
-  const [dataPets, setDataPets] = useState([]);
+  const [dataPets, setDataPets] = useState(undefined);
   const { first_name, last_name } = organizationUser;
   const [sexKey, setSexKey] = useState('');
   const [sizeKey, setSizeKey] = useState('');
   const [ageKey, setAgeKey] = useState('');
+  let search = {};
   const sexKeys = [
     {
       value: '',
@@ -78,22 +80,27 @@ export default function Search() {
 
   async function handleSearch(e) {
     e.preventDefault();
+    if (sexKey !== '') {
+      search = { ...search, sex_key: sexKey };
+    }
+    if (sizeKey !== '') {
+      search = { ...search, size_key: sizeKey };
+    }
+    if (ageKey !== '') {
+      search = { ...search, age_key: ageKey };
+    }
     try {
       const { data } = await api.post(
         'pet/search',
         {
-          search: {
-            sex_key: sexKey,
-            size_key: sizeKey,
-            age_key: ageKey,
-          },
+          search,
         },
         {
           headers: { Authorization: sessionRegister },
         },
       );
 
-      setDataPets(data);
+      setDataPets(data.data);
     } catch (error) {
       console.error(error);
     }
@@ -112,28 +119,37 @@ export default function Search() {
   }
 
   return (
-    <div className={dataPets.length !== 0 ? 'search-container -pets' : 'search-container'}>
-      <header>
-        <img src={logo} alt="Adopets" />
-        <p>
-          {first_name} <strong>{last_name}</strong>
-        </p>
-      </header>
-      <form>
-        <div className="header">
-          <h1>Buscar</h1>
-          <div>
-            <h2>Preparado para um novo amigo?</h2>
-            <p>selecione os filtros e seja feliz.</p>
+    <>
+      <div
+        className={
+          dataPets !== undefined && dataPets.length !== 0
+            ? 'search-container -pets'
+            : 'search-container'
+        }
+      >
+        <header>
+          <img src={logo} alt="Adopets" />
+          <p>
+            {first_name} <strong>{last_name}</strong>
+          </p>
+        </header>
+        <form>
+          <div className="header">
+            <h1>Buscar</h1>
+            <div>
+              <h2>Preparado para um novo amigo?</h2>
+              <p>selecione os filtros e seja feliz.</p>
+            </div>
           </div>
-        </div>
-        <div className="search">
-          <Select value={sexKey} onChange={handleSex} option={sexKeys} />
-          <Select value={sizeKey} onChange={handleSize} option={sizekeys} />
-          <Select value={ageKey} onChange={handleAge} option={agekeys} />
-          <Button classe="-white" label="Buscar" onClick={handleSearch} />
-        </div>
-      </form>
-    </div>
+          <div className="search">
+            <Select value={sexKey} onChange={handleSex} option={sexKeys} />
+            <Select value={sizeKey} onChange={handleSize} option={sizekeys} />
+            <Select value={ageKey} onChange={handleAge} option={agekeys} />
+            <Button classe="-white" label="Buscar" onClick={handleSearch} />
+          </div>
+        </form>
+      </div>
+      {dataPets !== undefined && dataPets.result !== 0 && <Pets pets={dataPets} />}
+    </>
   );
 }
