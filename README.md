@@ -58,6 +58,9 @@ $ npm i
 
 # Run frontend
 $ npm start
+
+# Run tests
+$ npm run test
 ```
 
 ## :memo: License
