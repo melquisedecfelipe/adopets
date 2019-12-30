@@ -33,8 +33,10 @@
 This project was developed with the following technologies:
 
 - [Axios](https://github.com/axios/axios)
+- [Enzyme](https://airbnb.io/enzyme/)
 - [Eslint](https://eslint.org/)
 - [Husky](https://github.com/typicode/husky)
+- [Jest](https://jestjs.io/)
 - [Prettier](https://prettier.io/)
 - [React](https://reactjs.org/)
 - [React icons](https://react-icons.netlify.com/)
