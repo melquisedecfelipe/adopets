@@ -127,8 +127,8 @@ export default function Search() {
           </div>
         </form>
       </div>
-      {pets !== undefined && pets.result !== 0 && <Pets pets={pets} onChange={handleOrder} />}
-      {pets !== undefined && pets.length !== 0 && (
+      {pets !== undefined && <Pets pets={pets} onChange={handleOrder} />}
+      {pets !== undefined && pets.result.length !== 0 && (
         <div className="footer">
           <div className="register">
             <div className="select">
