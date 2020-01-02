@@ -135,8 +135,7 @@ export default function Search() {
               <p>Mostrando</p>
               <Select value={petPerPage} onChange={handlePetPerPage} option={optionsSelect} />
               <p>
-                de <strong>{pets.length}</strong>
-                registros encontrados.{' '}
+                de <strong>{pets.count}</strong> registros encontrados.{' '}
               </p>
             </div>
             <div className="paginate">
