@@ -52,6 +52,8 @@ export default function Login({ history }) {
         <img src={logo} alt="Adopets" />
         <h2>Bem-vindo(a)</h2>
         <p>Digite seu e-mail e senha para acessar o sistema</p>
+        <small>E-mail: usuario-test@adopets.com</small>
+        <small>Senha: 123123</small>
         <Input type="text" placeholder="Seu e-mail" defaultValue={email} onBlur={handleEmail} />
         <Input
           type="password"
