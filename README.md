@@ -50,11 +50,8 @@ To clone and run this application, you'll need [Git](https://git-scm.com), [Node
 # Clone this repository
 $ git clone https://github.com/melquisedecfelipe/adopets
 
-# Go into the repository
-$ cd adopets
-
-# Install dependencies
-$ npm i
+# Go into the repository and install dependencies
+$ cd adopets && npm i
 
 # Run frontend
 $ npm start
