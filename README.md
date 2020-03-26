@@ -1,6 +1,5 @@
 <h1 align="center">
     <img alt="Adopets" src="https://res.cloudinary.com/dtifsqadc/image/upload/v1577496025/logo_m9kv1h.png" />
-    <br>
 </h1>
 
 <p align="center">
